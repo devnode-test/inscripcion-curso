@@ -21,7 +21,7 @@ export function ConfirmationStep({ selections, loading, onConfirm, onBack }: Con
           Por favor revisa tu selección antes de confirmar.
         </p>
         <div className="space-y-2 border rounded-lg p-4">
-          {selections.map((selection, index) => (
+          {selections.map((selection) => (
             <div key={selection.courseId} className="flex flex-col gap-2 py-3 border-b last:border-0">
               <span className="font-semibold text-base">{selection.courseName}</span>
               <div className="flex justify-start">

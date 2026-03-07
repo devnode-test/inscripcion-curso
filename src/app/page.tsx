@@ -138,17 +138,6 @@ export default function RegistrationPage() {
         {step === "SUCCESS" && <SuccessStep onReset={handleReset} selections={selections} />}
       </div>
 
-      <footer className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8 py-8 text-center text-sm text-muted-foreground">
-        Informática |{' '}
-        <a
-          href="https://saintgeorge.cl"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-primary transition-colors"
-        >
-          Saint George&apos;s College
-        </a>
-      </footer>
     </div>
   );
 }

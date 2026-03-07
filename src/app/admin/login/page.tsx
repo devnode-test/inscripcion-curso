@@ -30,7 +30,7 @@ export default function AdminLoginPage() {
       } else {
         toast.error("Credenciales inválidas");
       }
-    } catch (error) {
+    } catch {
       toast.error("Error al iniciar sesión");
     } finally {
       setLoading(false);
@@ -38,40 +38,42 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[60vh]">
-      <Card className="w-full max-w-sm">
-        <CardHeader>
-          <CardTitle>Administración</CardTitle>
-        </CardHeader>
-        <form onSubmit={handleLogin}>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="username">Usuario</Label>
-              <Input
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Contraseña</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Ingresando..." : "Ingresar"}
-            </Button>
-          </CardFooter>
-        </form>
-      </Card>
+    <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8 min-h-[80vh] flex flex-col">
+      <div className="flex flex-1 justify-center items-center">
+        <Card className="w-full max-w-sm">
+          <CardHeader>
+            <CardTitle>Administración</CardTitle>
+          </CardHeader>
+          <form onSubmit={handleLogin}>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="username">Usuario</Label>
+                <Input
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Contraseña</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? "Ingresando..." : "Ingresar"}
+              </Button>
+            </CardFooter>
+          </form>
+        </Card>
+      </div>
     </div>
   );
 }

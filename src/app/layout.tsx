@@ -1,6 +1,6 @@
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -31,6 +31,17 @@ export default function RootLayout({
         <main className="w-full py-10 px-4 sm:px-6 lg:px-8">
           {children}
         </main>
+        <footer className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8 py-8 text-center text-sm text-muted-foreground">
+          Informática |{" "}
+          <a
+            href="https://saintgeorge.cl"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-primary transition-colors"
+          >
+            Saint George&apos;s College
+          </a>
+        </footer>
         <Toaster />
       </body>
     </html>

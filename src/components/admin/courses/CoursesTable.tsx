@@ -13,14 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Edit, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -61,7 +54,7 @@ export function CoursesTable({ initialCourses }: CoursesTableProps) {
       toast.success("Curso eliminado correctamente");
       setCourses(courses.filter((c) => c.id !== courseId));
       router.refresh();
-    } catch (error) {
+    } catch {
       toast.error("Error al eliminar el curso");
     }
   };

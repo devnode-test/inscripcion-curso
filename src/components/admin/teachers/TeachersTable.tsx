@@ -13,14 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Edit, Mail, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -60,7 +53,7 @@ export function TeachersTable({ initialTeachers }: TeachersTableProps) {
       toast.success("Profesor eliminado correctamente");
       setTeachers(teachers.filter((t) => t.id !== teacherId));
       router.refresh();
-    } catch (error) {
+    } catch {
       toast.error("Error al eliminar el profesor");
     }
   };

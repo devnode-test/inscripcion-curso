@@ -2,16 +2,23 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createClient } from '@/lib/supabase/client';
+import { RegistrationSelection } from '@/types';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
 interface EmailStepProps {
-  onNext: (email: string, name: string, existingSelections?: any[]) => void;
+  onNext: (email: string, name: string, existingSelections?: RegistrationSelection[]) => void;
 }
 
 export function EmailStep({ onNext }: EmailStepProps) {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
+  type RegistrationCourse = { name: string | null };
+  type RegistrationBlock = { block_name: string | null };
+  type SelectedCourse = {
+    course: RegistrationCourse | RegistrationCourse[] | null;
+    block: RegistrationBlock | RegistrationBlock[] | null;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,11 +56,16 @@ export function EmailStep({ onNext }: EmailStepProps) {
 
       if (registration) {
         toast.info('Ya has realizado tu inscripción. Aquí están tus selecciones.');
-        const formattedSelections = registration.selected_courses.map((sc: any) => ({
-          courseId: 'completed', // Dummy ID
-          courseName: sc.course?.name,
-          blockName: sc.block?.block_name
-        }));
+        const selectedCourses = (registration.selected_courses ?? []) as SelectedCourse[];
+        const formattedSelections = selectedCourses.map((sc) => {
+          const course = Array.isArray(sc.course) ? sc.course[0] : sc.course;
+          const block = Array.isArray(sc.block) ? sc.block[0] : sc.block;
+          return {
+            courseId: 'completed',
+            courseName: course?.name ?? '',
+            blockName: block?.block_name ?? ''
+          };
+        });
         onNext(email, teacher.name, formattedSelections);
         setLoading(false);
         return;

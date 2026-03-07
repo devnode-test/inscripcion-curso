@@ -1,7 +1,6 @@
 import { SearchCourses } from '@/components/admin/dashboard/SearchCourses';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { createClient } from '@/lib/supabase/server';
 import { Download } from 'lucide-react';
 import { cookies } from 'next/headers';
@@ -105,7 +104,7 @@ export default async function AdminDashboard({
                             {isFull ? 'Completo' : 'Disponible'}
                           </span>
                         </div>
-                        
+
                         <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
                           <div>
                             <span className="block font-medium text-foreground">{enrolled}</span>
@@ -118,8 +117,8 @@ export default async function AdminDashboard({
                         </div>
 
                         <div className="w-full bg-secondary h-1.5 rounded-full overflow-hidden">
-                          <div 
-                            className={`h-full ${isFull ? 'bg-red-500' : 'bg-primary'}`} 
+                          <div
+                            className={`h-full ${isFull ? 'bg-red-500' : 'bg-primary'}`}
                             style={{ width: `${percentage}%` }}
                           />
                         </div>

@@ -39,7 +39,7 @@ export function AddTeacherForm() {
       setName("");
       setEmail("");
       router.refresh();
-    } catch (error) {
+    } catch {
       toast.error("Ocurrió un error inesperado");
     } finally {
       setLoading(false);
