@@ -20,27 +20,26 @@ export function AddTeacherForm() {
     setLoading(true);
 
     try {
-      const supabase = createClient();
-      
-      const { error } = await supabase
-        .from('teachers')
-        .insert([{ name, email }]);
+      const response = await fetch('/api/admin/teachers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email }),
+      });
 
-      if (error) {
-        if (error.code === '23505') {
-          toast.error("Este correo ya está registrado");
-        } else {
-          toast.error("Error al crear profesor");
-        }
-        return;
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || 'Error al crear profesor');
       }
 
       toast.success("Profesor agregado correctamente");
       setName("");
       setEmail("");
       router.refresh();
-    } catch {
-      toast.error("Ocurrió un error inesperado");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Ocurrió un error inesperado";
+      toast.error(message);
     } finally {
       setLoading(false);
     }
