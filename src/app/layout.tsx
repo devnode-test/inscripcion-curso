@@ -42,7 +42,7 @@ export default function RootLayout({
             Saint George&apos;s College
           </a>
         </footer>
-        <Toaster />
+        <Toaster position="top-center" />
       </body>
     </html>
   );

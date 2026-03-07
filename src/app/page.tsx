@@ -88,12 +88,12 @@ export default function RegistrationPage() {
       <header
         className={
           isEmailStep
-            ? "mx-auto w-full max-w-4xl pt-8 pb-6 text-center"
+            ? "mx-auto w-full max-w-4xl pt-8 pb-6 text-center px-4"
             : "mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8 pt-4 pb-6"
         }
       >
         {isEmailStep ? (
-          <div className="space-y-3">
+          <div className="flex flex-col items-center space-y-3">
             <div className="flex justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/logo_sgc_90.png" alt="Logo SGC" className="h-40 w-auto" />
@@ -106,7 +106,7 @@ export default function RegistrationPage() {
             </p>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center space-y-2">
+          <div className="flex flex-col items-center justify-center space-y-2 text-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo_sgc_90.png" alt="Logo SGC" className="h-40 w-auto" />
             <span className="text-2xl font-semibold tracking-tight text-foreground/90 sm:text-3xl">
