@@ -19,11 +19,11 @@ export function SuccessStep({ onReset, selections }: SuccessStepProps) {
       </CardHeader>
       <CardContent className="space-y-6">
         <p className="text-muted-foreground">
-          Hemos registrado tu selección de cursos correctamente.
+          Hemos registrado tu selección de prácticas correctamente.
         </p>
 
         <div className="space-y-3 border rounded-lg p-4 bg-muted/30 text-left">
-          <h3 className="font-semibold text-sm text-foreground">Tus Cursos Seleccionados:</h3>
+          <h3 className="font-semibold text-sm text-foreground">Tus Prácticas Seleccionadas:</h3>
           {selections.map((selection, index) => (
             <div key={index} className="flex flex-col gap-1 border-b last:border-0 pb-2 last:pb-0">
               <span className="text-sm font-medium">{selection.courseName}</span>

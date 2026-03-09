@@ -18,10 +18,11 @@ export async function PUT(
     const body = (await request.json()) as {
       name: string;
       description?: string;
+      room?: string;
       max_capacity: number;
       is_active: boolean;
     };
-    const { name, description, max_capacity, is_active } = body;
+    const { name, description, room, max_capacity, is_active } = body;
 
     // Get current course to check capacity change
     const { data: currentCourse, error: fetchError } = await supabaseAdmin
@@ -38,6 +39,7 @@ export async function PUT(
       .update({
         name,
         description,
+        room,
         max_capacity,
         is_active
       })
@@ -45,7 +47,10 @@ export async function PUT(
       .select()
       .single();
 
-    if (updateError) throw updateError;
+    if (updateError) {
+      console.error("Supabase Update Error:", updateError);
+      throw updateError;
+    }
 
     // If capacity changed, update blocks
     if (currentCourse.max_capacity !== max_capacity) {

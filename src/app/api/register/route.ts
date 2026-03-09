@@ -49,7 +49,7 @@ export async function POST(request: Request) {
         `
         teacher:teachers(name, email),
         selected_courses(
-          course:courses(name),
+          course:courses(name, room),
           block:course_blocks(block_name)
         )
       `,
@@ -70,7 +70,7 @@ export async function POST(request: Request) {
       process.env.RESEND_API_KEY !== "re_123456789"
     ) {
       type RegistrationTeacher = { name: string | null; email: string | null };
-      type RegistrationCourse = { name: string | null };
+      type RegistrationCourse = { name: string | null; room: string | null };
       type RegistrationBlock = { block_name: string | null };
       type SelectedCourse = {
         course: RegistrationCourse | RegistrationCourse[] | null;
@@ -92,6 +92,7 @@ export async function POST(request: Request) {
         const block = Array.isArray(sc.block) ? sc.block[0] : sc.block;
         return {
           name: course?.name,
+          room: course?.room,
           block: block?.block_name,
         };
       });
@@ -100,7 +101,7 @@ export async function POST(request: Request) {
         await resend.emails.send({
           from: "Inscripciones <inscripciones@alexanardi.com>",
           to: teacherEmail,
-          subject: "Confirmación de Inscripción de Cursos",
+          subject: "Confirmación de Inscripción de Prácticas",
           html: `
             <!DOCTYPE html>
             <html lang="es">
@@ -172,6 +173,12 @@ export async function POST(request: Request) {
                   display: block;
                   margin-bottom: 4px;
                 }
+                .course-room {
+                  font-size: 13px;
+                  color: #6b7280;
+                  display: block;
+                  margin-bottom: 4px;
+                }
                 .course-block {
                   display: inline-block;
                   background-color: #d1fae5;
@@ -199,7 +206,7 @@ export async function POST(request: Request) {
                 <div class="content">
                   <h1>¡Inscripción Confirmada!</h1>
                   <p>Hola <strong>${teacherName}</strong>,</p>
-                  <p>Hemos registrado exitosamente tu selección de cursos. A continuación encontrarás el detalle:</p>
+                  <p>Hemos registrado exitosamente tu selección de prácticas. A continuación encontrarás el detalle:</p>
 
                   <div class="course-list">
                     ${courses
@@ -207,6 +214,7 @@ export async function POST(request: Request) {
                         (c) => `
                       <div class="course-item">
                         <span class="course-name">${c.name}</span>
+                        ${c.room ? `<span class="course-room">Sala: ${c.room}</span>` : ""}
                         <span class="course-block">Bloque ${c.block}</span>
                       </div>
                     `,

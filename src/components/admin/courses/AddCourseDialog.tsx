@@ -26,6 +26,7 @@ export function AddCourseDialog() {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
+    room: "",
     max_capacity: 14
   });
 
@@ -46,13 +47,13 @@ export function AddCourseDialog() {
         throw new Error('Error creating course');
       }
 
-      toast.success("Curso creado exitosamente");
+      toast.success("Práctica creada exitosamente");
       setOpen(false);
-      setFormData({ name: "", description: "", max_capacity: 14 });
+      setFormData({ name: "", description: "", room: "", max_capacity: 14 });
       router.refresh();
     } catch (error) {
       console.error(error);
-      toast.error("Error al crear el curso");
+      toast.error("Error al crear la práctica");
     } finally {
       setLoading(false);
     }
@@ -63,15 +64,15 @@ export function AddCourseDialog() {
       <DialogTrigger asChild>
         <Button className="w-full sm:w-auto">
           <Plus className="mr-2 h-4 w-4" />
-          Nuevo Curso
+          Nueva Práctica
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>Crear Nuevo Curso</DialogTitle>
+            <DialogTitle>Crear Nueva Práctica</DialogTitle>
             <DialogDescription>
-              Agrega un nuevo curso al sistema. Se crearán automáticamente los bloques A y B.
+              Agrega una nueva práctica al sistema. Se crearán automáticamente los bloques A y B.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -95,6 +96,17 @@ export function AddCourseDialog() {
                 id="description"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="room" className="text-right">
+                Sala
+              </Label>
+              <Input
+                id="room"
+                value={formData.room}
+                onChange={(e) => setFormData({ ...formData, room: e.target.value })}
                 className="col-span-3"
               />
             </div>

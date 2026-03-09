@@ -83,7 +83,7 @@ export function EmailStep({ onNext }: EmailStepProps) {
   return (
     <div className="w-full">
       <div className="text-center space-y-2 mb-8">
-        <h2 className="text-2xl font-semibold tracking-tight text-gray-900">Inscripción de Cursos</h2>
+        <h2 className="text-2xl font-semibold tracking-tight text-gray-900">Inscripción de Prácticas</h2>
         <p className="text-sm text-gray-500">Ingresa tu correo institucional para comenzar.</p>
       </div>
       <form onSubmit={handleSubmit} className="space-y-6">

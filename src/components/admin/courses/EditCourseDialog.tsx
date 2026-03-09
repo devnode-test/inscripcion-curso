@@ -32,6 +32,7 @@ export function EditCourseDialog({ course, open, onOpenChange, onSuccess }: Edit
   const [formData, setFormData] = useState({
     name: "",
     description: "",
+    room: "",
     max_capacity: 14,
     is_active: true
   });
@@ -41,6 +42,7 @@ export function EditCourseDialog({ course, open, onOpenChange, onSuccess }: Edit
       setFormData({
         name: course.name,
         description: course.description || "",
+        room: course.room || "",
         max_capacity: course.max_capacity,
         is_active: course.is_active
       });
@@ -79,9 +81,9 @@ export function EditCourseDialog({ course, open, onOpenChange, onSuccess }: Edit
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>Editar Curso</DialogTitle>
+            <DialogTitle>Editar Práctica</DialogTitle>
             <DialogDescription>
-              Modifica los detalles del curso. Ten cuidado al reducir cupos si ya hay inscritos.
+              Modifica los datos de la práctica.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -105,6 +107,17 @@ export function EditCourseDialog({ course, open, onOpenChange, onSuccess }: Edit
                 id="edit-description"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="edit-room" className="text-right">
+                Sala
+              </Label>
+              <Input
+                id="edit-room"
+                value={formData.room}
+                onChange={(e) => setFormData({ ...formData, room: e.target.value })}
                 className="col-span-3"
               />
             </div>

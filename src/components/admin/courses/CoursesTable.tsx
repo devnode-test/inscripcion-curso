@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Edit, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -24,6 +24,7 @@ export type AdminCourseRow = {
   id: string;
   name: string;
   description: string | null;
+  room: string | null;
   max_capacity: number;
   is_active: boolean;
 };
@@ -65,8 +66,8 @@ export function CoursesTable({ initialCourses }: CoursesTableProps) {
         {courses.map((course) => (
           <Card key={course.id} className="flex flex-col">
             <CardHeader className="flex-grow pb-3">
-              <div className="flex flex-col gap-2 items-start">
-                <CardTitle className="text-lg leading-tight" title={course.name}>
+              <div className="flex justify-between items-start gap-2">
+                <CardTitle className="text-lg leading-tight line-clamp-2" title={course.name}>
                   {course.name}
                 </CardTitle>
                 <Badge
@@ -76,14 +77,23 @@ export function CoursesTable({ initialCourses }: CoursesTableProps) {
                   {course.is_active ? "Activo" : "Inactivo"}
                 </Badge>
               </div>
-              <CardDescription className="text-xs mt-2" title={course.description || ""}>
+              <CardDescription className="line-clamp-2" title={course.description || ""}>
                 {course.description || "Sin descripción"}
               </CardDescription>
             </CardHeader>
-            <CardFooter className="pt-0 justify-between items-center mt-auto">
-              <p className="text-sm text-muted-foreground">
-                <span className="font-semibold">Cupos:</span> {course.max_capacity}
-              </p>
+            <CardContent className="pb-3 text-sm text-muted-foreground">
+              <div className="flex items-center justify-between gap-2">
+                <span>Cupos máximos:</span>
+                <span className="font-medium text-foreground">{course.max_capacity}</span>
+              </div>
+              {course.room && (
+                <div className="flex items-center justify-between gap-2 mt-1">
+                  <span>Sala:</span>
+                  <span className="font-medium text-foreground">{course.room}</span>
+                </div>
+              )}
+            </CardContent>
+            <CardFooter className="pt-0 justify-end gap-2 mt-auto">
               <div className="flex gap-2">
                 <Button
                   variant="outline"

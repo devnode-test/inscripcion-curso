@@ -14,9 +14,10 @@ export async function POST(request: Request) {
     const body = (await request.json()) as {
       name: string;
       description?: string;
+      room?: string;
       max_capacity: number;
     };
-    const { name, description, max_capacity } = body;
+    const { name, description, room, max_capacity } = body;
 
     // 1. Create Course
     const { data: course, error: courseError } = await supabaseAdmin
@@ -24,6 +25,7 @@ export async function POST(request: Request) {
       .insert([{
         name,
         description,
+        room,
         max_capacity,
         is_active: true
       }])

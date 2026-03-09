@@ -53,11 +53,11 @@ export default async function AdminCoursesPage({
               <ArrowLeft className="h-4 w-4" />
             </Link>
           </Button>
-          <h1 className="text-3xl font-bold tracking-tight">Gestión de Cursos</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Gestión de Prácticas</h1>
         </div>
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-between w-full">
           <div className="w-full sm:max-w-xs">
-            <SearchCourses placeholder="Buscar cursos..." />
+            <SearchCourses placeholder="Buscar prácticas..." />
           </div>
           <div className="w-full sm:w-auto">
              <AddCourseDialog />

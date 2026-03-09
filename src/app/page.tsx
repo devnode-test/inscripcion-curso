@@ -102,7 +102,7 @@ export default function RegistrationPage() {
               Sistema de Inscripción Docente
             </h1>
             <p className="text-base text-muted-foreground sm:text-lg">
-              Selecciona tus cursos y bloques horarios preferidos.
+              Selecciona tus prácticas y bloques horarios preferidos.
             </p>
           </div>
         ) : (
