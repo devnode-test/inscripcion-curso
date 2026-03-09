@@ -87,15 +87,17 @@ export async function POST(request: Request) {
         : details.teacher;
       const teacherName = teacher?.name || "Profesor";
       const teacherEmail = teacher?.email || email;
-      const courses = (details.selected_courses ?? []).map((sc) => {
-        const course = Array.isArray(sc.course) ? sc.course[0] : sc.course;
-        const block = Array.isArray(sc.block) ? sc.block[0] : sc.block;
-        return {
-          name: course?.name,
-          room: course?.room,
-          block: block?.block_name,
-        };
-      });
+      const courses = (details.selected_courses ?? [])
+        .map((sc) => {
+          const course = Array.isArray(sc.course) ? sc.course[0] : sc.course;
+          const block = Array.isArray(sc.block) ? sc.block[0] : sc.block;
+          return {
+            name: course?.name,
+            room: course?.room,
+            block: block?.block_name,
+          };
+        })
+        .sort((a, b) => (a.block || "").localeCompare(b.block || ""));
 
       try {
         await resend.emails.send({

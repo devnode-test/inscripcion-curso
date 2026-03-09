@@ -9,6 +9,8 @@ interface SuccessStepProps {
 }
 
 export function SuccessStep({ onReset, selections }: SuccessStepProps) {
+  const sortedSelections = [...selections].sort((a, b) => a.blockName.localeCompare(b.blockName));
+
   return (
     <Card className="w-full max-w-md mx-auto text-center">
       <CardHeader>
@@ -24,7 +26,7 @@ export function SuccessStep({ onReset, selections }: SuccessStepProps) {
 
         <div className="space-y-3 border rounded-lg p-4 bg-muted/30 text-left">
           <h3 className="font-semibold text-sm text-foreground">Tus Prácticas Seleccionadas:</h3>
-          {selections.map((selection, index) => (
+          {sortedSelections.map((selection, index) => (
             <div key={index} className="flex flex-col gap-1 border-b last:border-0 pb-2 last:pb-0">
               <span className="text-sm font-medium">{selection.courseName}</span>
               {selection.room && (
