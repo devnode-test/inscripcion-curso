@@ -167,7 +167,7 @@ export function CourseSelectionStep({ teacherName, onNext, onBack }: CourseSelec
       <div className="flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="text-center md:text-left">
             <h2 className="text-2xl font-bold tracking-tight">Hola, {teacherName}</h2>
-            <p className="text-muted-foreground">Selecciona 2 cursos y sus respectivos bloques horarios.</p>
+            <p className="text-muted-foreground">Selecciona 2 prácticas y sus respectivos bloques horarios.</p>
         </div>
         <div className="flex items-center gap-2">
             <Badge variant={selections.length === 2 ? "default" : "secondary"} className="text-base px-4 py-1">
