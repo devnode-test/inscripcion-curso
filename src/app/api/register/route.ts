@@ -213,8 +213,9 @@ export async function POST(request: Request) {
                       )
                       .join("")}
                   </div>
-
-                  <p>Si tienes alguna duda, por favor contacta a los miembros de la comisión.</p>
+                  
+                  <p>Si tienes alguna duda contacta a:</p>
+                  <p><strong>Paula Ugarte - Patricia Albertini - M° José Riveros</strong></p>
                 </div>
                 <div class="footer">
                   Informática | Saint George's College
