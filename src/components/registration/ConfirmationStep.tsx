@@ -24,6 +24,9 @@ export function ConfirmationStep({ selections, loading, onConfirm, onBack }: Con
           {selections.map((selection) => (
             <div key={selection.courseId} className="flex flex-col gap-2 py-3 border-b last:border-0">
               <span className="font-semibold text-base">{selection.courseName}</span>
+              {selection.room && (
+                <span className="text-sm text-muted-foreground">Sala: {selection.room}</span>
+              )}
               <div className="flex justify-start">
                 <div className="bg-secondary text-secondary-foreground px-3 py-1 rounded-md text-sm font-medium border">
                   Bloque {selection.blockName}

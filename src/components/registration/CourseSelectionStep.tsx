@@ -121,10 +121,10 @@ export function CourseSelectionStep({ teacherName, onNext, onBack }: CourseSelec
       // Check if course already selected with different block
       if (selections.some((s) => s.courseId === course.id)) {
         // Switch block for same course
-        setSelections(selections.map(s => s.courseId === course.id ? { courseId: course.id, blockName: block.block_name, courseName: course.name } : s));
+        setSelections(selections.map(s => s.courseId === course.id ? { courseId: course.id, blockName: block.block_name, courseName: course.name, room: course.room } : s));
       } else {
         // Add new selection
-        setSelections([...selections, { courseId: course.id, blockName: block.block_name, courseName: course.name }]);
+        setSelections([...selections, { courseId: course.id, blockName: block.block_name, courseName: course.name, room: course.room }]);
       }
     }
   };
@@ -197,6 +197,11 @@ export function CourseSelectionStep({ teacherName, onNext, onBack }: CourseSelec
             <Card key={course.id} className={cn("transition-all h-full flex flex-col", isCourseSelected(course.id) ? "border-primary ring-1 ring-primary" : "")}>
             <CardHeader className="pb-3 flex-grow block">
               <CardTitle className="text-lg line-clamp-3 leading-tight w-full block">{course.name}</CardTitle>
+              {course.room && (
+                <div className="text-sm text-muted-foreground mt-1 block w-full">
+                  Sala: {course.room}
+                </div>
+              )}
               <CardDescription className="text-xs w-full block mt-2 text-left">{course.description}</CardDescription>
             </CardHeader>
             <CardContent className="mt-auto pt-0">

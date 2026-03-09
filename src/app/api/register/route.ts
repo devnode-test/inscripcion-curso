@@ -223,7 +223,7 @@ export async function POST(request: Request) {
                   </div>
                   
                   <p>Si tienes alguna duda contacta a:</p>
-                  <p><strong>Paula Ugarte - Patricia Albertini - M° José Riveros</strong></p>
+                  <p><strong>Paula Ugarte - Patricia Albertini - Ma. José Riveros</strong></p>
                 </div>
                 <div class="footer">
                   Informática | Saint George's College
