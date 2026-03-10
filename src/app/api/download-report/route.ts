@@ -91,11 +91,21 @@ export async function GET(request: Request) {
     ]);
   }
 
-  const csvString = csvRows.map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+  const csvString = csvRows
+    .map(row =>
+      row
+        .map(cell => {
+          const safe = String(cell ?? '').replace(/"/g, '""');
+          return `"${safe}"`;
+        })
+        .join(',')
+    )
+    .join('\n');
+  const csvWithBom = '\uFEFF' + csvString;
 
-  return new NextResponse(csvString, {
+  return new NextResponse(csvWithBom, {
     headers: {
-      'Content-Type': 'text/csv',
+      'Content-Type': 'text/csv; charset=utf-8',
       'Content-Disposition': `attachment; filename="reporte-${new Date().toISOString()}.csv"`,
     },
   });
