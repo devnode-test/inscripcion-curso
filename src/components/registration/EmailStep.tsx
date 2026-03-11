@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createClient } from '@/lib/supabase/client';
 import { RegistrationSelection } from '@/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 interface EmailStepProps {
@@ -13,12 +13,31 @@ interface EmailStepProps {
 export function EmailStep({ onNext }: EmailStepProps) {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
+  const [registrationsOpen, setRegistrationsOpen] = useState<boolean | null>(null);
   type RegistrationCourse = { name: string | null };
   type RegistrationBlock = { block_name: string | null };
   type SelectedCourse = {
     course: RegistrationCourse | RegistrationCourse[] | null;
     block: RegistrationBlock | RegistrationBlock[] | null;
   };
+
+  useEffect(() => {
+    // Fetch registrations status (public endpoint)
+    const fetchStatus = async () => {
+      try {
+        const resp = await fetch('/api/settings/registrations', { method: 'GET', cache: 'no-store' });
+        if (resp.ok) {
+          const json = await resp.json();
+          setRegistrationsOpen(json.registrations_open);
+        } else {
+          setRegistrationsOpen(true);
+        }
+      } catch {
+        setRegistrationsOpen(true);
+      }
+    };
+    fetchStatus();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,6 +98,16 @@ export function EmailStep({ onNext }: EmailStepProps) {
       setLoading(false);
     }
   };
+
+  // If status is known and closed, show message
+  if (registrationsOpen === false) {
+    return (
+      <div className="w-full text-center space-y-4">
+        <h2 className="text-2xl font-semibold tracking-tight text-gray-900">Inscripción de Prácticas</h2>
+        <p className="text-sm text-red-600">Las inscripciones están cerradas. No se aceptan más inscripciones.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">

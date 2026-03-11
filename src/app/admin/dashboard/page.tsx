@@ -1,4 +1,5 @@
 import { SearchCourses } from '@/components/admin/dashboard/SearchCourses';
+import { RegistrationToggle } from '@/components/admin/dashboard/RegistrationToggle';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { createClient } from '@/lib/supabase/server';
@@ -76,8 +77,11 @@ export default async function AdminDashboard({
         </div>
       </div>
 
-      <div className="flex justify-between items-center">
-        <SearchCourses />
+      <div className="flex items-center justify-between gap-4">
+        <div className="w-full sm:max-w-xs">
+          <SearchCourses />
+        </div>
+        <RegistrationToggle />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

@@ -30,6 +30,7 @@ export default async function AdminTeachersPage({
   let teachersQuery = supabase
     .from('teachers')
     .select('*')
+    .neq('email', '__settings__registrations@system.local')
     .order('created_at', { ascending: false });
 
   if (query) {

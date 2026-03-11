@@ -1,6 +1,9 @@
 import { resend } from "@/lib/resend";
 import { createClient } from "@/lib/supabase/server";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 import { NextResponse } from "next/server";
+
+const SETTINGS_EMAIL = "__settings__registrations@system.local";
 
 export async function POST(request: Request) {
   try {
@@ -8,6 +11,26 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { email, course1_id, course1_block, course2_id, course2_block } =
       body;
+
+    // 0. Check if registrations are open
+    // Read registrations status from sentinel row
+    const { data: settings, error: settingsError } = await supabaseAdmin
+      .from("teachers")
+      .select("is_active")
+      .eq("email", SETTINGS_EMAIL)
+      .maybeSingle();
+
+    const registrationsOpen = settingsError ? false : (settings?.is_active ?? true);
+
+    if (!registrationsOpen) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Las inscripciones están cerradas. No se aceptan más inscripciones.",
+        },
+        { status: 403 },
+      );
+    }
 
     // 1. Call the RPC function to register
     const { data: rpcData, error: rpcError } = await supabase.rpc(
