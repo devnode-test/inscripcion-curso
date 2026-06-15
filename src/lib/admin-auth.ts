@@ -100,10 +100,11 @@ export async function hasValidAdminToken(token: string | null | undefined): Prom
 
   try {
     const key = await importSigningKey(config.sessionSecret);
+    const signatureBytes = new Uint8Array(base64UrlToBytes(signaturePart));
     const isSignatureValid = await crypto.subtle.verify(
       "HMAC",
       key,
-      base64UrlToBytes(signaturePart),
+      signatureBytes,
       encoder.encode(payloadPart),
     );
 
