@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { ADMIN_TOKEN_COOKIE, hasValidAdminToken } from "@/lib/admin-auth";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
 const SETTINGS_EMAIL = "__settings__registrations@system.local";
 
 export async function GET() {
   const cookieStore = await cookies();
-  const token = cookieStore.get("admin_token");
-  if (!token) {
+  const token = cookieStore.get(ADMIN_TOKEN_COOKIE)?.value;
+  if (!(await hasValidAdminToken(token))) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
@@ -26,8 +27,8 @@ export async function GET() {
 
 export async function PUT(request: Request) {
   const cookieStore = await cookies();
-  const token = cookieStore.get("admin_token");
-  if (!token) {
+  const token = cookieStore.get(ADMIN_TOKEN_COOKIE)?.value;
+  if (!(await hasValidAdminToken(token))) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 

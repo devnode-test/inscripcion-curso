@@ -1,4 +1,10 @@
 import { cookies } from "next/headers";
+import {
+  ADMIN_SESSION_MAX_AGE,
+  ADMIN_TOKEN_COOKIE,
+  createAdminSessionToken,
+  getAdminAuthConfig,
+} from "@/lib/admin-auth";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -6,15 +12,30 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { username, password } = body;
 
-    const adminUser = process.env.ADMIN_USERNAME || "admin";
-    const adminPass = process.env.ADMIN_PASSWORD || "admin123";
+    const adminConfig = getAdminAuthConfig();
 
-    if (username === adminUser && password === adminPass) {
+    if (!adminConfig) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Falta configurar las credenciales y la sesión del administrador.",
+        },
+        { status: 500 },
+      );
+    }
+
+    if (
+      username === adminConfig.username &&
+      password === adminConfig.password
+    ) {
       const cookieStore = await cookies();
-      cookieStore.set("admin_token", "valid-admin-token", {
+      const sessionToken = await createAdminSessionToken(adminConfig.username);
+
+      cookieStore.set(ADMIN_TOKEN_COOKIE, sessionToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        maxAge: 60 * 60 * 24, // 1 day
+        sameSite: "strict",
+        maxAge: ADMIN_SESSION_MAX_AGE,
         path: "/",
       });
 

@@ -16,7 +16,6 @@ import { Loader2, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import { createClient } from "@/lib/supabase/client";
 
 export function AddTeacherDialog() {
   const [open, setOpen] = useState(false);

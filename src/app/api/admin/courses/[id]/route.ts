@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { ADMIN_TOKEN_COOKIE, hasValidAdminToken } from '@/lib/admin-auth';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 
 export async function PUT(
@@ -7,9 +8,9 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const cookieStore = await cookies();
-  const token = cookieStore.get('admin_token');
+  const token = cookieStore.get(ADMIN_TOKEN_COOKIE)?.value;
 
-  if (!token) {
+  if (!(await hasValidAdminToken(token))) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
@@ -95,9 +96,9 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const cookieStore = await cookies();
-  const token = cookieStore.get('admin_token');
+  const token = cookieStore.get(ADMIN_TOKEN_COOKIE)?.value;
 
-  if (!token) {
+  if (!(await hasValidAdminToken(token))) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
