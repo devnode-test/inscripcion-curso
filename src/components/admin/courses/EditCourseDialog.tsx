@@ -32,6 +32,7 @@ export function EditCourseDialog({ course, open, onOpenChange, onSuccess }: Edit
   const [formData, setFormData] = useState({
     name: "",
     description: "",
+    teacher_name: "",
     room: "",
     max_capacity: 14,
     is_active: true
@@ -42,6 +43,7 @@ export function EditCourseDialog({ course, open, onOpenChange, onSuccess }: Edit
       setFormData({
         name: course.name,
         description: course.description || "",
+        teacher_name: course.teacher_name || "",
         room: course.room || "",
         max_capacity: course.max_capacity,
         is_active: course.is_active
@@ -107,6 +109,17 @@ export function EditCourseDialog({ course, open, onOpenChange, onSuccess }: Edit
                 id="edit-description"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="edit-teacher-name" className="text-right">
+                Profesor
+              </Label>
+              <Input
+                id="edit-teacher-name"
+                value={formData.teacher_name}
+                onChange={(e) => setFormData({ ...formData, teacher_name: e.target.value })}
                 className="col-span-3"
               />
             </div>

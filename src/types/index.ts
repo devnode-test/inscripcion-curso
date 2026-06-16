@@ -2,6 +2,7 @@ export interface Course {
   id: string;
   name: string;
   description: string;
+  teacher_name?: string;
   room?: string;
   max_capacity: number;
   blocks: CourseBlock[];
@@ -25,5 +26,6 @@ export interface RegistrationSelection {
   courseId: string;
   blockName: string; // 'A' or 'B'
   courseName: string;
+  teacherName?: string;
   room?: string;
 }

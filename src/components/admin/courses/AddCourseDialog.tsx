@@ -26,6 +26,7 @@ export function AddCourseDialog() {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
+    teacher_name: "",
     room: "",
     max_capacity: 14
   });
@@ -49,7 +50,7 @@ export function AddCourseDialog() {
 
       toast.success("Práctica creada exitosamente");
       setOpen(false);
-      setFormData({ name: "", description: "", room: "", max_capacity: 14 });
+      setFormData({ name: "", description: "", teacher_name: "", room: "", max_capacity: 14 });
       router.refresh();
     } catch (error) {
       console.error(error);
@@ -96,6 +97,17 @@ export function AddCourseDialog() {
                 id="description"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="teacher_name" className="text-right">
+                Profesor
+              </Label>
+              <Input
+                id="teacher_name"
+                value={formData.teacher_name}
+                onChange={(e) => setFormData({ ...formData, teacher_name: e.target.value })}
                 className="col-span-3"
               />
             </div>

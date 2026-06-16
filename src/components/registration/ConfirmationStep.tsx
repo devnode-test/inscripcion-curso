@@ -26,6 +26,9 @@ export function ConfirmationStep({ selections, loading, onConfirm, onBack }: Con
           {sortedSelections.map((selection) => (
             <div key={selection.courseId} className="flex flex-col gap-2 py-3 border-b last:border-0">
               <span className="font-semibold text-base">{selection.courseName}</span>
+              {selection.teacherName && (
+                <span className="text-sm font-medium text-foreground/80">{selection.teacherName}</span>
+              )}
               {selection.room && (
                 <span className="text-sm text-muted-foreground">Sala: {selection.room}</span>
               )}

@@ -72,7 +72,7 @@ export async function POST(request: Request) {
         `
         teacher:teachers(name, email),
         selected_courses(
-          course:courses(name, room),
+          course:courses(name, teacher_name, room),
           block:course_blocks(block_name)
         )
       `,
@@ -93,7 +93,11 @@ export async function POST(request: Request) {
       process.env.RESEND_API_KEY !== "re_123456789"
     ) {
       type RegistrationTeacher = { name: string | null; email: string | null };
-      type RegistrationCourse = { name: string | null; room: string | null };
+      type RegistrationCourse = {
+        name: string | null;
+        teacher_name: string | null;
+        room: string | null;
+      };
       type RegistrationBlock = { block_name: string | null };
       type SelectedCourse = {
         course: RegistrationCourse | RegistrationCourse[] | null;
@@ -116,6 +120,7 @@ export async function POST(request: Request) {
           const block = Array.isArray(sc.block) ? sc.block[0] : sc.block;
           return {
             name: course?.name,
+            teacherName: course?.teacher_name,
             room: course?.room,
             block: block?.block_name,
           };
@@ -239,6 +244,7 @@ export async function POST(request: Request) {
                         (c) => `
                       <div class="course-item">
                         <span class="course-name">${c.name}</span>
+                        ${c.teacherName ? `<span class="course-room">Profesor: ${c.teacherName}</span>` : ""}
                         ${c.room ? `<span class="course-room">Sala: ${c.room}</span>` : ""}
                         <span class="course-block">Bloque ${c.block}</span>
                       </div>

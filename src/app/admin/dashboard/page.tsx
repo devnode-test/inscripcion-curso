@@ -32,6 +32,7 @@ export default async function AdminDashboard({
     .select(`
       id,
       name,
+      teacher_name,
       room,
       max_capacity,
       blocks:course_blocks(
@@ -91,6 +92,11 @@ export default async function AdminDashboard({
               <CardTitle className="text-lg font-bold leading-tight" title={course.name}>
                 {course.name}
               </CardTitle>
+              {course.teacher_name && (
+                <div className="text-sm font-medium text-foreground/80 pt-1">
+                  {course.teacher_name}
+                </div>
+              )}
               {course.room && (
                 <div className="text-sm text-muted-foreground pt-1">
                   Sala: {course.room}

@@ -14,7 +14,7 @@ export function EmailStep({ onNext }: EmailStepProps) {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [registrationsOpen, setRegistrationsOpen] = useState<boolean | null>(null);
-  type RegistrationCourse = { name: string | null };
+  type RegistrationCourse = { name: string | null; room: string | null; teacher_name: string | null };
   type RegistrationBlock = { block_name: string | null };
   type SelectedCourse = {
     course: RegistrationCourse | RegistrationCourse[] | null;
@@ -65,7 +65,7 @@ export function EmailStep({ onNext }: EmailStepProps) {
         .select(`
           id,
           selected_courses (
-            course:courses(name),
+            course:courses(name, room, teacher_name),
             block:course_blocks(block_name)
           )
         `)
@@ -82,7 +82,9 @@ export function EmailStep({ onNext }: EmailStepProps) {
           return {
             courseId: 'completed',
             courseName: course?.name ?? '',
-            blockName: block?.block_name ?? ''
+            blockName: block?.block_name ?? '',
+            teacherName: course?.teacher_name ?? undefined,
+            room: course?.room ?? undefined,
           };
         });
         onNext(email, teacher.name, formattedSelections);
@@ -113,6 +115,9 @@ export function EmailStep({ onNext }: EmailStepProps) {
     <div className="w-full">
       <div className="text-center space-y-2 mb-8">
         <h2 className="text-2xl font-semibold tracking-tight text-gray-900">Inscripción de Prácticas</h2>
+        <p className="rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-900">
+          Recuerde que debe elegir dos prácticas distintas a las que asitió en el taller anterior.
+        </p>
         <p className="text-sm text-gray-500">Ingresa tu correo institucional para comenzar.</p>
       </div>
       <form onSubmit={handleSubmit} className="space-y-6">

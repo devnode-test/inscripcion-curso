@@ -24,6 +24,7 @@ export type AdminCourseRow = {
   id: string;
   name: string;
   description: string | null;
+  teacher_name: string | null;
   room: string | null;
   max_capacity: number;
   is_active: boolean;
@@ -77,6 +78,11 @@ export function CoursesTable({ initialCourses }: CoursesTableProps) {
                   {course.is_active ? "Activo" : "Inactivo"}
                 </Badge>
               </div>
+              {course.teacher_name && (
+                <div className="text-sm font-medium text-foreground/80">
+                  {course.teacher_name}
+                </div>
+              )}
               <CardDescription className="line-clamp-2" title={course.description || ""}>
                 {course.description || "Sin descripción"}
               </CardDescription>

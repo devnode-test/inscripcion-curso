@@ -121,10 +121,31 @@ export function CourseSelectionStep({ teacherName, onNext, onBack }: CourseSelec
       // Check if course already selected with different block
       if (selections.some((s) => s.courseId === course.id)) {
         // Switch block for same course
-        setSelections(selections.map(s => s.courseId === course.id ? { courseId: course.id, blockName: block.block_name, courseName: course.name, room: course.room } : s));
+        setSelections(
+          selections.map((s) =>
+            s.courseId === course.id
+              ? {
+                  courseId: course.id,
+                  blockName: block.block_name,
+                  courseName: course.name,
+                  teacherName: course.teacher_name,
+                  room: course.room,
+                }
+              : s,
+          ),
+        );
       } else {
         // Add new selection
-        setSelections([...selections, { courseId: course.id, blockName: block.block_name, courseName: course.name, room: course.room }]);
+        setSelections([
+          ...selections,
+          {
+            courseId: course.id,
+            blockName: block.block_name,
+            courseName: course.name,
+            teacherName: course.teacher_name,
+            room: course.room,
+          },
+        ]);
       }
     }
   };
@@ -167,6 +188,9 @@ export function CourseSelectionStep({ teacherName, onNext, onBack }: CourseSelec
       <div className="flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="text-center md:text-left">
             <h2 className="text-2xl font-bold tracking-tight">Hola, {teacherName}</h2>
+            <p className="mt-2 rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-900">
+              Recuerde que debe elegir dos prácticas distintas a las que asitió en el taller anterior.
+            </p>
             <p className="text-muted-foreground">Selecciona 2 prácticas y sus respectivos bloques horarios.</p>
         </div>
         <div className="flex items-center gap-2">
@@ -197,6 +221,11 @@ export function CourseSelectionStep({ teacherName, onNext, onBack }: CourseSelec
             <Card key={course.id} className={cn("transition-all h-full flex flex-col", isCourseSelected(course.id) ? "border-primary ring-1 ring-primary" : "")}>
             <CardHeader className="pb-3 flex-grow block">
               <CardTitle className="text-lg line-clamp-3 leading-tight w-full block">{course.name}</CardTitle>
+              {course.teacher_name && (
+                <div className="text-sm font-medium text-foreground/80 mt-1 block w-full">
+                  {course.teacher_name}
+                </div>
+              )}
               {course.room && (
                 <div className="text-sm text-muted-foreground mt-1 block w-full">
                   Sala: {course.room}

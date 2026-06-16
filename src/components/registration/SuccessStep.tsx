@@ -29,6 +29,9 @@ export function SuccessStep({ onReset, selections }: SuccessStepProps) {
           {sortedSelections.map((selection, index) => (
             <div key={index} className="flex flex-col gap-1 border-b last:border-0 pb-2 last:pb-0">
               <span className="text-sm font-medium">{selection.courseName}</span>
+              {selection.teacherName && (
+                <span className="text-xs font-medium text-foreground/80">{selection.teacherName}</span>
+              )}
               {selection.room && (
                 <span className="text-xs text-muted-foreground">Sala: {selection.room}</span>
               )}
